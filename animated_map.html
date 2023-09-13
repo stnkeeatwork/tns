@@ -14,7 +14,7 @@
 <body>
   <div id="map"></div>
 
-  <script>
+ <script>
   var map = L.map('map', {
     center: [-0.7893, 113.9213],
     zoom: 2,
@@ -33,12 +33,36 @@
   // Define the points (replace with your coordinates)
   var points = [
     { lat: -0.7893, lon: 113.9213 }, // Indonesia
-    { lat: 37.7749, lon: -122.4194 }, // Example destination (San Francisco, USA)
-    // Add more points as needed
+    { lat: 35.8617, lon: 104.1954 }, // China
+    { lat: 55.3781, lon: -3.4360 }, // UK
+    { lat: 23.4241, lon: 53.8478 }, // UAE
+    { lat: -25.2744, lon: 133.7751 }, // Australia
+    { lat: 4.2105, lon: 101.9758 }, // Malaysia
+    { lat: 46.2276, lon: 2.2137 } // France
   ];
 
   // Create a polyline and add it to the map
   var polyline = L.polyline(points.map(point => [point.lat, point.lon]), { color: 'red' }).addTo(map);
+
+  // Adding markers for each point with a popup displaying the country name
+  for (let point of points) {
+    L.marker([point.lat, point.lon]).addTo(map)
+      .bindPopup(`<b>${getCountryName(point)}</b>`)
+      .openPopup();
+  }
+
+  function getCountryName(point) {
+    switch(point.lat.toFixed(4) + ',' + point.lon.toFixed(4)) {
+      case '-0.7893,113.9213': return 'Indonesia';
+      case '35.8617,104.1954': return 'China';
+      case '55.3781,-3.4360': return 'UK';
+      case '23.4241,53.8478': return 'UAE';
+      case '-25.2744,133.7751': return 'Australia';
+      case '4.2105,101.9758': return 'Malaysia';
+      case '46.2276,2.2137': return 'France';
+      default: return '';
+    }
+  }
 </script>
   
 </body>
